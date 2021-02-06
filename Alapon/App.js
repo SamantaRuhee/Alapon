@@ -1,21 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import AuthStackScreen from "./src/Navigation/AuthStack";
+import AppDrawerScreen from "./src/Navigation/AppDrawer";
+import { AuthContext, AuthProvider } from "./src/Provider/AuthProvider";
+import * as firebase from 'firebase';
 
-export default function App() {
+const firebaseConfig = {
+    apiKey: "AIzaSyCKPd83d-J4uVuiZLXpGtbMIBl9UguzHZc",
+    authDomain: "alapon-b60a4.firebaseapp.com",
+    projectId: "alapon-b60a4",
+    storageBucket: "alapon-b60a4.appspot.com",
+    messagingSenderId: "928228571658",
+    appId: "1:928228571658:web:be2366b7158714c3ab3df3"
+  };
+
+if(!firebase.apps.length){
+firebase.initializeApp(firebaseConfig);}
+
+
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthProvider>
+      <AuthContext.Consumer>
+        {(auth) => (
+          <NavigationContainer>
+            {auth.IsLoggedIn ? <AppDrawerScreen /> : <AuthStackScreen />}
+          </NavigationContainer>
+        )}
+      </AuthContext.Consumer>
+    </AuthProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
