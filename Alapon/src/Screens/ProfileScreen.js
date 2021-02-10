@@ -3,7 +3,6 @@ import { View, StyleSheet, AsyncStorage, Image, Platform } from "react-native";
 import { Text, Card, Button, Avatar, Header } from "react-native-elements";
 import HeaderHome from "../Components/HeaderHome";
 import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
 import { AuthContext } from "../Provider/AuthProvider";
 
 const ProfileScreen = (props) => {
@@ -42,7 +41,6 @@ const ProfileScreen = (props) => {
         <View style={styles.viewStyle}>
           <HeaderHome
             DrawerFunction={() => {
-              props.navigation.toggleDrawer();
             }}
           />
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', }}>

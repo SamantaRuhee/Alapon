@@ -2,7 +2,8 @@ import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { Entypo, AntDesign, Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./../Screens/HomeScreen";
-import NotificationScreen from "./../Screens/NotificationScreen";
+import ProfileScreen from "./../Screens/ProfileScreen";
+import MessageScreen from "./../Screens/MessageScreen";
 
 const HomeTab = createMaterialBottomTabNavigator();
 
@@ -23,19 +24,28 @@ const HomeTabScreen = () => {
         }}
       />
       <HomeTab.Screen
-        name="Notification"
-        component={NotificationScreen}
+        name="Profile" 
+        component={ProfileScreen}
         options={{
-          tabBarLabel: "Notifications",
+          tabBarLabel: "Profile",
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Ionicons name="ios-notifications" size={26} color="white" />
+              <Entypo name="home" color="white" size={26} />
             ) : (
-              <Ionicons
-                name="ios-notifications-outline"
-                size={22}
-                color="white"
-              />
+              <AntDesign name="home" color="white" size={22} />
+            ),
+        }}
+      />
+      <HomeTab.Screen
+        name="Adda" 
+        component={MessageScreen}
+        options={{
+          tabBarLabel: "Adda",
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <Entypo name="home" color="white" size={26} />
+            ) : (
+              <AntDesign name="home" color="white" size={22} />
             ),
         }}
       />

@@ -7,28 +7,8 @@ const HeaderHome = (props) => {
     <AuthContext.Consumer>
       {(auth) => (
         <Header
-          leftComponent={{
-            icon: "menu",
-            color: "#fff",
-            onPress: props.DrawerFunction,
-          }}
-          centerComponent={{ text: "The Office", style: { color: "#fff" } }}
-          rightComponent={{
-            icon: "lock-outline",
-            color: "#fff",
-            onPress: function () {
-              firebase
-                .auth()
-                .signOut()
-                .then(() => {
-                  auth.setIsLoggedIn(false);
-                  auth.setCurrentUser({});
-                })
-                .catch((error) => {
-                  alert(error);
-                });
-            },
-          }}
+          centerComponent={{ text: "YOUR DAILY DOSE OF NEWS", style: { color: "#fff" } }}
+          
         />
       )}
     </AuthContext.Consumer>
