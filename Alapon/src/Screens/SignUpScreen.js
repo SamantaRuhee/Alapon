@@ -8,7 +8,6 @@ import 'firebase/firestore';
 
 const SignUpScreen = (props) => {
     const [Name, setName] = useState("");
-    const [SID, setSID] = useState("");
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -19,20 +18,13 @@ const SignUpScreen = (props) => {
     } else {
         return (<View style={Styles.viewstyle}>
             <Card>
-                <Card.Title>CARD WITH DIVIDER</Card.Title>
+                <Card.Title>Sign Up</Card.Title>
                 <Card.Divider />
                 <Input
                     leftIcon={<Entypo name="mail-with-circle" size={24} color="black" />}
                     placeholder='Name'
                     onChangeText={function (currentInput) {
                         setName(currentInput);
-                    }}
-                />
-                <Input
-                    leftIcon={<Entypo name="mobile" size={24} color="black" />}
-                    placeholder='Student ID'
-                    onChangeText={function (currentInput) {
-                        setSID(currentInput);
                     }}
                 />
                 <Input
@@ -55,7 +47,7 @@ const SignUpScreen = (props) => {
                     title='Create Account'
                     type='clear'
                     onPress={() => {
-                        if (Name && SID && Email && Password) {
+                        if (Name  && Email && Password) {
                             setIsLoading(true);
                             firebase.auth()
                                 .createUserWithEmailAndPassword(Email, Password)
@@ -65,7 +57,6 @@ const SignUpScreen = (props) => {
                                         .doc(userCreds.user.uid)
                                         .set({
                                             name: Name,
-                                            sid: SID,
                                             email: Email,
                                         })
                                         .then(() => {
@@ -113,7 +104,7 @@ const Styles = StyleSheet.create(
             alignSelf: "center",
         },
         viewstyle: {
-            backgroundColor: '#FFDF00',
+            backgroundColor: '#33bbff',
             flex: 1,
             justifyContent: 'center',
         }

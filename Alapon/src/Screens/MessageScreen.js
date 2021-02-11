@@ -1,28 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, AsyncStorage, Image, Platform } from "react-native";
-import { Text, Card, Button, Avatar, Header } from "react-native-elements";
-import HeaderHome from "../Components/HeaderHome";
+import React, { useState } from 'react';
+import { GiftedChat } from 'react-native-gifted-chat';
 
-const MessageScreen = (props) => {
-  
-    return (
-          <View style={styles.viewStyle}>
-            <HeaderHome
-              DrawerFunction={() => {
-              }}
-            />
-          </View>
-    );
-  };
-  
-  const styles = StyleSheet.create({
-    textStyle: {
-      fontSize: 20,
-      alignContent: "center",
+export default function MessageScreen() {
+  const [messages, setMessages] = useState([
+    /**
+     * Mock message data
+     */
+    // example of system message
+    {
+      _id: 0,
+      text: 'New room created.',
+      createdAt: new Date().getTime(),
+      system: true
     },
-    viewStyle: {
-      flex: 1,
-    },
-  });
-  
-  export default MessageScreen;
+    // example of chat message
+    {
+      _id: 1,
+      text: 'Hello!',
+      createdAt: new Date().getTime(),
+      user: {
+        _id: 2,
+        name: 'Test User'
+      }
+    }
+  ]);
+
+  // helper method that is sends a message
+  function handleSend(newMessage = []) {
+    setMessages(GiftedChat.append(messages, newMessage));
+  }
+
+  return (
+    <GiftedChat
+      messages={messages}
+      onSend={newMessage => handleSend(newMessage)}
+      user={{ _id: 1 }}
+    />
+  );
+}

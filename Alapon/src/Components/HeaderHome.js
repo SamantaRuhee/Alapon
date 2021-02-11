@@ -2,6 +2,7 @@ import React from "react";
 import { Header } from "react-native-elements";
 import * as firebase from "firebase";
 import { AuthContext } from "../Provider/AuthProvider";
+
 const HeaderHome = (props) => {
   return (
     <AuthContext.Consumer>

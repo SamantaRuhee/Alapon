@@ -21,7 +21,7 @@ const SignInScreen = (props) => {
             <AuthContext.Consumer>
                 {(auth) => (<View style={Styles.viewstyle}>
                     <Card>
-                        <Card.Title>CARD WITH DIVIDER</Card.Title>
+                        <Card.Title>Sign In</Card.Title>
                         <Card.Divider />
                         <Input
                             leftIcon={<Entypo name="mail-with-circle" size={24} color="black" />}
@@ -83,7 +83,7 @@ const Styles = StyleSheet.create(
             alignSelf: "center",
         },
         viewstyle: {
-            backgroundColor: '#FFDF00',
+            backgroundColor: '#33bbff',
             flex: 1,
             justifyContent: 'center',
         }

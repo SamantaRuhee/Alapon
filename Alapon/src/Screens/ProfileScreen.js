@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, AsyncStorage, Image, Platform } from "react-native";
+import { View, StyleSheet, Image, Platform } from "react-native";
+import { AsyncStorage } from '@react-native-community/async-storage';
 import { Text, Card, Button, Avatar, Header } from "react-native-elements";
 import HeaderHome from "../Components/HeaderHome";
 import * as ImagePicker from 'expo-image-picker';
