@@ -9,7 +9,22 @@ const HeaderHome = (props) => {
       {(auth) => (
         <Header
           centerComponent={{ text: "YOUR DAILY DOSE OF NEWS", style: { color: "#fff" } }}
-          
+          rightComponent={{
+            icon: "lock-outline",
+            color: "#fff",
+            onPress: function () {
+              firebase
+                .auth()
+                .signOut()
+                .then(() => {
+                  auth.setIsLoggedIn(false);
+                  auth.setCurrentUser({});
+                })
+                .catch((error) => {
+                  alert(error);
+                });
+            },
+          }}
         />
       )}
     </AuthContext.Consumer>

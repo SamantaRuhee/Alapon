@@ -1,5 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { GiftedChat } from 'react-native-gifted-chat';
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, FlatList, ActivityIndicator } from "react-native";
+import { AsyncStorage } from '@react-native-community/async-storage';
+import { Card, Button, Text, Avatar, Input } from "react-native-elements";
+import Messages from "../Components/Messages";
+import HeaderHome from "../Components/HeaderHome";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import { AuthContext } from "../Provider/AuthProvider";
 import { useNetInfo } from "@react-native-community/netinfo";
 import * as firebase from "firebase";
@@ -10,28 +15,12 @@ const MessageScreen=()=> {
   if (netinfo.type != "unknown" && !netinfo.isInternetReachable) {
     alert("No Internet!");
   }
-  const [posts, setPosts] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [messages, setMessages] = useState([
-    {
-      _id: 0,
-      text: 'New room created.',
-      createdAt: new Date().getTime(),
-      system: true
-    },
-    // example of chat message
-    {
-      _id: 1,
-      text: 'Hello!',
-      createdAt: new Date().getTime(),
-      user: {
-        _id: 2,
-        name: 'Test User'
-      }
-    }
-  ]);
 
-  const loadPosts = async () => {
+
+  const loadMessages = async () => {
     setLoading(true);
     firebase
       .firestore()
@@ -45,7 +34,7 @@ const MessageScreen=()=> {
             data: doc.data(),
           });
         });
-        setPosts(User);
+        setMessages(User);
         setLoading(false);
       })
       .catch((error) => {
@@ -55,42 +44,70 @@ const MessageScreen=()=> {
   };
 
   useEffect(() => {
-    loadPosts();
+    loadMessages();
   }, []);
 
-  // helper method that is sends a message
-  function handleSend(newMessage = []) {
-    setMessages(GiftedChat.append(messages, newMessage));
-  }
 
   return (
     <AuthContext.Consumer>
       {(auth) => (
-    <GiftedChat
-      messages={messages}
-      onSend={newMessage =>{
-        handleSend(newMessage);
-        setLoading(true);
-        firebase
-          .firestore().collection("messages").add({
-            userId: auth.CurrentUser.uid,
-            body: messages,
-            author: auth.CurrentUser.displayName,
-            created_at: firebase.firestore.Timestamp.now(),
-          })
-          .then(() => {
-            setLoading(false);
-            alert("Messages created Successfully!");
-          })
-          .catch((error) => {
-            setLoading(false);
-            alert(error);
-          });
-      }}
-      user={{ _id: 1 }}
-    />
-    )}
+        <View style={styles.viewStyle}>
+          <HeaderHome
+          />
+          <FlatList
+            data={messages}
+            renderItem={({ item }) => {
+              return (
+                <Messages
+                  author={item.data.author}
+                  body={item.data.body}
+                />
+              );
+            }}
+          />
+          <Card>
+            <Input
+              onChangeText={(currentText) => {
+                setInput(currentText);
+              }}
+            />
+            <Button
+              title="send"
+              onPress={function () {
+                setLoading(true);
+                firebase
+                  .firestore().collection("messages").add({
+                    userId: auth.CurrentUser.uid,
+                    body: input,
+                    author: auth.CurrentUser.displayName,
+                    created_at: firebase.firestore.Timestamp.now(),
+                  })
+                  .then(() => {
+                    setLoading(false);
+                  })
+                  .catch((error) => {
+                    setLoading(false);
+                    alert(error);
+                  });
+                  
+              }}
+            />
+          </Card>
+          <ActivityIndicator size="large" color="red" animating={loading} />
+
+          
+        </View>
+      )}
     </AuthContext.Consumer>
   );
 }
+const styles = StyleSheet.create({
+  textStyle: {
+    fontSize: 30,
+    color: "blue",
+  },
+  viewStyle: {
+    flex: 1,
+  },
+});
 export default MessageScreen; 
