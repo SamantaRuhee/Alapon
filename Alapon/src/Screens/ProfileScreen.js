@@ -50,12 +50,12 @@ const ProfileScreen = (props) => {
           </View>
           <Card style={{flex: 1,justifyContent: 'center'}}>
             <Text style={styles.textStyle}>Name:{auth.CurrentUser.displayName}</Text>
-            <Text style={styles.textStyle}>Student ID:{auth.CurrentUser.sid}</Text>
             <Text style={styles.textStyle}>Mail:{auth.CurrentUser.email}</Text>
           </Card>
           <Button 
             title="Delete Profile"
             type='clear'
+            style={styles.titleStyle}
           />
         </View>
       )}
@@ -70,6 +70,9 @@ const styles = StyleSheet.create({
   },
   viewStyle: {
     flex: 1,
+  },
+  titleStyle: {
+    color: 'red',
   },
 });
 
